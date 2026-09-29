@@ -33,7 +33,7 @@
 
   <properties>
     <spring-boot.version>3.5.14</spring-boot.version>
-    <spring-framework.version>6.2.18</spring-framework.version>
+    <spring-framework.version>6.2.19</spring-framework.version>
   </properties>
 
   <dependencyManagement>
