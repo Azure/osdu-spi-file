@@ -1,214 +1,125 @@
-# file-azure
+# File Service: Azure Provider
 
 > [!NOTE]
-> This is the Azure provider for the File service, maintained by Microsoft in [`Azure/osdu-spi-file`](https://github.com/Azure/osdu-spi-file). The shared service code comes from the OSDU community upstream. See [CONTRIBUTING.md](../../CONTRIBUTING.md) for which paths this repository owns.
+> Shared service code comes from the [OSDU community upstream](https://community.opengroup.org/osdu/platform/system/file).
 
-[![coverage report](https://community.opengroup.org/osdu/platform/system/file/badges/master/coverage.svg)](https://community.opengroup.org/osdu/platform/system/file/-/commits/master)
+File hands out time-bound signed URLs for uploading and downloading files, and stores the metadata record that describes each file once it lands.
 
-file-azure is a [Spring Boot](https://spring.io/projects/spring-boot) service that  provides internal and external API endpoints to let the application or user fetch any records from the system or request file location data.
-For example, users can request generation of an individual signed URL per file. Using a signed URL, OSDU users will be able to upload their files to the system.
+## At a glance
 
-### POST /v2/files/revokeURL
+| | |
+|---|---|
+| API base path | `/api/file/v2/` |
+| Swagger UI | `/api/file/v2/swagger` |
+| Health | `:8081/actuator/health` |
+| Depends on | Partition, Entitlements, Storage, Search |
+| Azure resources | Storage and Data Lake (staging and persistent areas), Cosmos DB (file locations), Service Bus (`statuschangedtopic`) |
+| Deployed by | [OSDU SPI Stack](https://github.com/Azure/osdu-spi-stack) (`software/stacks/osdu/services/file.yaml`) |
 
-The `/v2/files/revokeURL` API endpoint revokes the Signed URLs based on the request parameters.<br/>
-For example:  for the given `storage account`.
+## Repository layout
 
-- Required permissions: `service.file.admin` role required to perform revoke operation
-- Required environment property: `AZURE_SUBSCRIPTION_ID` Azure Subscription ID of the given environment
+[CONTRIBUTING.md](../../CONTRIBUTING.md) explains where each kind of change belongs.
 
+| Path | Owner | Contents |
+|---|---|---|
+| `file-core/` | OSDU upstream | Shared service code |
+| `provider/file-azure/` | This repository | Azure provider (this module) |
+| `file-acceptance-test/` | OSDU upstream | End-to-end suite run against a deployed environment |
+| `testing/file-test-azure/` | This repository | Azure integration tests |
+| `.spi/service.yaml` | This repository | How CI deploys and tests the service on SPI Stack |
 
-> **Note**:
->- For the given storage account, all the existing Signed URLs generated via 'UserDelegationKey' method will be revoked.
->- It will not have any impact on the Signed URLs generated using 'Account Key' method. <br/>
->- 'msi_enabled' feature should be enabled and Pod Identity environment variables [AZURE_CLIENT_ID, AZURE_CLIENT_SECRET] should be removed.
->- `Managed Identity` will be used for Authentication. All the required access for resources [CosmosDB Storage account , Event Grid] should be granted to the `Managed Identity`
+## Build
 
-#### Request body
-
-| Property | Type     | Description                        |
-| ------- | -------- |------------------------------------|
-| resourceGroup        | `String` | Resource Group name of the Storage account |
-| storageAccount        | `String` | Storage acount name |
-
-> **Note**:
->- The Request is a Map of Properties to manage the input parameters required to revoke Signed URLs.
->- Each CSP will have its own implementation and request properties based on the revoke Logic supported by the provider.
->- Example: For `Azure` [ Resource Group and Storage Account Name] is required to revoke URLs
-
-**References**:
-- https://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts/revoke-user-delegation-keys?tabs=HTTP
-
-Request example:
-
-```sh
-curl --location --request POST 'https://{path}/v2/files/revokeURL' \
-     --header 'Authorization: Bearer {token}' \
-     --header 'Content-Type: application/json' \
-     --data-raw '{
-        "resourceGroup": "test-resource-group-name",
-        "storageAccount" : "test-storage-account-name"
-     }'
-```
-
-#### Response
-The File service returns the following `HTTP 204 No Content` for successful response.
-
-## Running Locally
-
-### Requirements
-
-In order to run this service locally, you will need the following:
-
-- [Maven 3.8.0+](https://maven.apache.org/download.cgi)
-- [AdoptOpenJDK17](https://adoptopenjdk.net/)
-- Azure infrastructure for the service, provisioned by [OSDU SPI Stack](https://github.com/Azure/osdu-spi-stack)
-- While not a strict dependency, example commands in this document use [bash](https://www.gnu.org/software/bash/)
-
-### General Tips
-
-**Environment Variable Management**
-The following tools make environment variable configuration simpler
- - [direnv](https://direnv.net/) - for a shell/terminal environment
- - [EnvFile](https://plugins.jetbrains.com/plugin/7861-envfile) - for [Intellij IDEA](https://www.jetbrains.com/idea/)
-
-**Lombok**
-This project uses [Lombok](https://projectlombok.org/) for code generation. You may need to configure your IDE to take advantage of this tool.
- - [Intellij configuration](https://projectlombok.org/setup/intellij)
- - [VSCode configuration](https://projectlombok.org/setup/vscode)
-
-
-### Understanding Environment Variables
-
-In order to run the service locally, you will need to have the following environment variables defined.
-
-**Note** The following command can be useful to pull secrets from keyvault:
-```bash
-az keyvault secret show --vault-name $KEY_VAULT_NAME --name $KEY_VAULT_SECRET_NAME --query value -otsv
-```
-
-**Required to run service**
-
-| name | value | description | sensitive? | source |
-| ---  | ---   | ---         | ---        | ---    |
-| `LOG_PREFIX` | `file` | Logging prefix | no | - |
-| `AZURE_CLIENT_ID` | `********` | Identity to run the service locally. This enables access to Azure resources. You only need this if running locally | yes | keyvault secret: `$KEYVAULT_URI/secrets/app-dev-sp-username` |
-| `AZURE_TENANT_ID` | `********` | AD tenant to authenticate users from | yes | -- |
-| `AZURE_CLIENT_SECRET` | `********` | Secret for `$AZURE_CLIENT_ID` | yes | keyvault secret: `$KEYVAULT_URI/secrets/app-dev-sp-password` |
-| `KEYVAULT_URL` | ex `https://foo-keyvault.vault.azure.net/` | URI of KeyVault that holds application secrets | no | output of infrastructure deployment |
-| `cosmosdb_database` | ex `foo-db` | The name of the CosmosDB database | no | output of infrastructure deployment |
-| `AZURE_AD_APP_RESOURCE_ID` | `********` | AAD client application ID | yes | output of infrastructure deployment |
-| `osdu_entitlements_url` | ex `https://foo-osdu.msft-osdu-test.org/entitlements/v1` | Entitlements API endpoint | no | output of infrastructure deployment |
-| `osdu_entitlements_app_key` | `OBSOLETE` | This is deprecated | no | -- |
-| `spring.application.name` | `file-azure` | Name of application. Needed by App Insights | no | -- |
-| `osdu_storage_url` | `https://storage.azurewebsites.net/api/storage/v2` | Storage API endpoint | no | -- |
-| `server_port` | ex `8082` | Port the service will run on | no | -- |
-| `AZURE_STORAGE_ACCOUNT` | ex `foo-storage-account` | Storage account for storing documents | no | output of infrastructure deployment |
-| `storage_account` | ex `foo-storage-account` | Storage account for storing documents | no | output of infrastructure deployment |
-| `azure_istioauth_enabled` | `true` (depends on if service is running in Kubernetes environment with Istio installed) | Configuring use of Istio | no | Set to true when deploying the service into a Kubernetes cluster with Istio configured. Set to false and uncomment the three lines [here](https://community.opengroup.org/osdu/platform/system/file/-/blob/master/provider/file-azure/src/main/resources/application.properties) defining `azure.activedirectory.client-id`, `azure.activedirectory.AppIdUri`, and `azure.activedirectory.session-stateless=true` if running locally |
-
-**Required to run integration tests**
-
-| name | value | description | sensitive? | source |
-| ---  | ---   | ---         | ---        | ---    |
-| `FILE_SERVICE_HOST` | ex `http://localhost:8080/` | The host where the service is running | no | -- |
-| `DATA_PARTITION_ID` | ex `opendes` | OSDU tenant used for testing | no | -- |
-| `INTEGRATION_TESTER` | `********` | System identity to assume for API calls. Note: this user must have entitlements configured already | no | -- |
-| `TESTER_SERVICEPRINCIPAL_SECRET` | `********` | Secret for `$INTEGRATION_TESTER` | yes | -- |
-| `AZURE_AD_TENANT_ID` | `********` | AD tenant to authenticate users from | yes | -- |
-| `AZURE_AD_APP_RESOURCE_ID` | `********` | AAD client application ID | yes | output of infrastructure deployment |
-| `NO_DATA_ACCESS_TESTER` | `********` | Service principal ID of a service principal without entitlements | yes | `aad-no-data-access-tester-client-id` secret from keyvault |
-| `NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET` | `********` | Secret for `$NO_DATA_ACCESS_TESTER` | yes | `aad-no-data-access-tester-secret` secret from keyvault |
-| `AZURE_STORAGE_ACCOUNT` | ex `foo-storage-account` | Storage account for storing documents | no | output of infrastructure deployment |
-| `USER_ID` | osdu-user | User ID | no | - |
-| `EXIST_FILE_ID` | ex '****' | Existing file Id should be added  | no | - |
-| `TIME_ZONE` | `UTC+0` | Time zone required for tests to pass  | yes | - |
-| `STAGING_CONTAINER_NAME` | `file_staging_area` | Name of staging container for file service | no | created by Terraform |
-
-Following variables are optional and not required if using `TESTER_SERVICEPRINCIPAL_SECRET` and `NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET` which is current usage for Azure OSDU.
-
-| name | value | description | sensitive? | source |
-| ---  | ---   | ---         | ---        | ---    |
-| `INTEGRATION_TESTER_ACCESS_TOKEN` | `********` | Bearer token for `$INTEGRATION_TESTER` | yes | -- |
-| `NO_DATA_ACCESS_TESTER_ACCESS_TOKEN` | `********` | Bearer token for `$NO_DATA_ACCESS_TESTER` | yes | -- |
-
-
-## Running Locally
-
-### Configure Maven
-
-Check that maven is installed:
-```bash
-$ mvn --version
-Apache Maven 3.8.0
-Maven home: /usr/share/maven
-Java version: 17, vendor: AdoptOpenJDK
-...
-```
-
-The OSDU dependencies resolve from the public OSDU community package registry. Pass the settings file in `.mvn` to Maven:
-```bash
-mvn --settings .mvn/community-maven.settings.xml <goals>
-```
-
-### Build and run the application
-
-After configuring your environment as specified above, you can follow these steps to build and run the application. These steps should be invoked from the repository root.
+Requires Java 17 and Maven 3.8+. OSDU dependencies resolve from the public community registry through the settings file in `.mvn`:
 
 ```bash
-# build + test + install core service code from repository root
-$ (cd file-core && mvn clean install)
-
-# build + test + package azure service code
-$ (cd provider/file-azure/ && mvn clean package)
-
-# run service from repository root
-#
-# Note: this assumes that the environment variables for running the service as outlined above are already exported in your environment.
-$ java -jar $(find provider/file-azure/target/ -name '*-spring-boot.jar')
-
+mvn --settings .mvn/community-maven.settings.xml -P core,azure clean install
 ```
 
-### Test the Application
+The runnable jar lands at `provider/file-azure/target/file-azure-*-spring-boot.jar`.
 
-_After the service has started it should be accessible via a web browser by visiting [http://localhost:8080/api/file/v2/swagger](http://localhost:8080/api/file/v2/swagger). If the request does not fail, you can then run the integration tests._
+## Configuration
+
+SPI Stack sets the service's environment from two places: the shared `osdu-config` ConfigMap and the service's own entry in [`services/file.yaml`](https://github.com/Azure/osdu-spi-stack/blob/main/software/stacks/osdu/services/file.yaml). Those files are the contract; the tables below list what File actually reads from them.
+
+**Shared, from `osdu-config`:**
+
+| Variable | Purpose |
+|---|---|
+| `KEYVAULT_URL` | Central Key Vault |
+| `SERVER_PORT` | HTTP port (`8080`) |
+| `AAD_CLIENT_ID` | Application ID that caller tokens are issued for, passed on as `AZURE_AD_APP_RESOURCE_ID` below |
+
+**Specific to File**, from `services/file.yaml`:
+
+| Variable | Value on SPI Stack | Purpose |
+|---|---|---|
+| `SERVER_SERVLET_CONTEXTPATH` | `/api/file/` | API base path |
+| `AZURE_AD_APP_RESOURCE_ID` | `$(AAD_CLIENT_ID)` | Token audience |
+| `PARTITION_SERVICE_ENDPOINT` | `http://partition/api/partition/v1` | Per-partition resource lookup |
+| `OSDU_ENTITLEMENTS_URL` | `http://entitlements/api/entitlements/v2` | Caller authorization |
+| `OSDU_STORAGE_URL` | `http://storage/api/storage/v2` | Metadata records |
+| `SEARCH_HOST` | `http://search/api/search/v2` | File list queries |
+| `SEARCH_QUERY_LIMIT` | `1000` | Page size for search queries |
+| `BATCH_SIZE` | `100` | Batch size for search queries |
+| `COSMOSDB_DATABASE` | `osdu-db` | Database inside each partition's Cosmos DB account |
+| `AZURE_PUBSUB_PUBLISH` | `true` | Publish file status events |
+| `SERVICE_BUS_ENABLED_STATUS` | `true` | Publish status events to Service Bus |
+| `SERVICE_BUS_TOPIC_STATUS` | `statuschangedtopic` | Status event topic |
+| `AZURE_ISTIOAUTH_ENABLED` | `true` | Trust the mesh's token validation |
+| `AZURE_PAAS_WORKLOADIDENTITY_ISENABLED` | `true` | Authenticate to Azure with workload identity |
+
+The service authenticates to Azure with workload identity, which injects `AZURE_CLIENT_ID` and a federated token; there are no client secrets. Signed URLs are user delegation SAS, signed with a key from that identity rather than an account key. Per-partition resources are resolved at request time through the Partition service.
+
+## Test
+
+| Suite | Where | Runs in CI | Run it yourself |
+|---|---|---|---|
+| Unit | `file-core`, `provider/file-azure` | Every pull request (Java Build) | `mvn ... install` from [Build](#build) |
+| Acceptance | [`file-acceptance-test`](../../file-acceptance-test/README.md) | Every pull request, against SPI Stack (Deploy and Test) | `spi test file` |
+| Integration | `testing/file-test-azure` | Every pull request, against SPI Stack (Deploy and Test) | `spi test file --suite integration` |
+
+**Acceptance** calls the deployed service through the gateway as a privileged test identity. The bindings in `.spi/service.yaml` supply its host, partition, entitlements domain, legal tag, and token.
+
+**Integration** is the Azure suite. It sits outside the root Maven build, so the descriptor runs it from `testing/` with bearer tokens for the privileged and no-access identities. Two cases are excluded there: `TestFileCollection`, and the end-to-end `TestFile#testFileDmsApis` flow, which needs a resource group and storage account name the stack does not bind.
+
+Against an environment you are connected to:
 
 ```bash
-# build + install integration test core
-$ (cd testing/file-test-core/ && mvn clean install)
-
-# build + run Azure integration tests.
-#
-# Note: this assumes that the environment variables for integration tests as outlined above are already exported in your environment.
-$ (cd testing/file-test-azure/ && mvn clean test)
+spi test file --suite all            # both suites, as the environment shipped them
+spi test file --suite all --source . # this checkout's suites and descriptor
 ```
 
-## Open API 3.0 - Swagger
-- Swagger UI:  http://localhost:8080/api/file/v2/swagger (will redirect to  http://localhost:8080/api/file/v2/swagger-ui/index.html)
-- api-docs (JSON) :  http://localhost:8080/api/file/v2/api-docs
-- api-docs (YAML) :  http://localhost:8080/api/file/v2/api-docs.yaml
+To call the API by hand, `spi token` mints a bearer token:
 
-All the Swagger and OpenAPI related common properties are managed here [swagger.properties](../../file-core/src/main/resources/swagger.properties)
+```bash
+curl -H "Authorization: Bearer $(spi token)" -H "data-partition-id: <partition>" \
+  https://<gateway>/api/file/v2/files/uploadURL
+```
 
-## Debugging
+## Deploy
 
-Jet Brains - the authors of Intellij IDEA, have written an [excellent guide](https://www.jetbrains.com/help/idea/debugging-your-first-java-application.html) on how to debug java programs.
+CI publishes the service image to GHCR. On a pull request, the Deploy and Test lane borrows an SPI Stack environment, runs the new image there, proves it with the test suites, and restores the environment's own image, so a merge to `main` has already passed on real infrastructure. This repository does not own infrastructure; SPI Stack does.
 
+To try a build by hand on an environment you are connected to, pin it by digest and release the pin when done:
 
-## Deploying the Service
+```bash
+spi service pin file --image ghcr.io/azure/osdu-spi-file@sha256:<digest>
+spi service reset file
+```
 
-Environments and service deployments are provisioned by [OSDU SPI Stack](https://github.com/Azure/osdu-spi-stack). This repository builds the service image and runs the acceptance tests against a deployed environment; see [`file-acceptance-test`](../../file-acceptance-test/README.md).
+## Service notes
+
+**Revoking signed URLs.** `POST /api/file/v2/files/revokeURL` is Azure-only. It revokes every user delegation key on a storage account, which invalidates all signed URLs issued from it; URLs signed with an account key are unaffected. It needs the `service.file.admin` role and a body naming the account:
+
+```json
+{ "resourceGroup": "<resource-group>", "storageAccount": "<storage-account>" }
+```
+
+The call goes through Azure Resource Manager, so the service identity needs permission to revoke delegation keys on that account, and the process needs `AZURE_SUBSCRIPTION_ID` to pick the subscription. SPI Stack does not set `AZURE_SUBSCRIPTION_ID`, and CI does not exercise this endpoint, so treat it as unsupported on SPI Stack until both are in place. A successful call returns `204 No Content`.
 
 ## License
+
 Copyright © Microsoft Corporation
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Licensed under the [Apache License 2.0](../../LICENSE).
