@@ -38,7 +38,7 @@
     <junit-jupiter.version>5.12.2</junit-jupiter.version>
     <rest-assured.version>3.2.0</rest-assured.version>
     <cucumber.version>5.4.0</cucumber.version>
-    <guice.version>4.2.0</guice.version>
+    <guice.version>4.2.3</guice.version>
     <commons-lang3.version>3.20.0</commons-lang3.version>
     <jjwt.version>0.9.1</jjwt.version>
     <okhttp.version>2.7.5</okhttp.version>
