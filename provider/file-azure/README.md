@@ -1,9 +1,12 @@
 # file-azure
 
+> [!NOTE]
+> This is the Azure provider for the File service, maintained by Microsoft in [`Azure/osdu-spi-file`](https://github.com/Azure/osdu-spi-file). The shared service code comes from the OSDU community upstream. See [CONTRIBUTING.md](../../CONTRIBUTING.md) for which paths this repository owns.
+
 [![coverage report](https://community.opengroup.org/osdu/platform/system/file/badges/master/coverage.svg)](https://community.opengroup.org/osdu/platform/system/file/-/commits/master)
 
 file-azure is a [Spring Boot](https://spring.io/projects/spring-boot) service that  provides internal and external API endpoints to let the application or user fetch any records from the system or request file location data.
-For example, users can request generation of an individual signed URL per file. Using a signed URL, OSDU R2 users will be able to upload their files to the system.
+For example, users can request generation of an individual signed URL per file. Using a signed URL, OSDU users will be able to upload their files to the system.
 
 ### POST /v2/files/revokeURL
 
@@ -58,7 +61,7 @@ In order to run this service locally, you will need the following:
 
 - [Maven 3.8.0+](https://maven.apache.org/download.cgi)
 - [AdoptOpenJDK17](https://adoptopenjdk.net/)
-- Infrastructure dependencies, deployable through the relevant [infrastructure template](https://dev.azure.com/slb-des-ext-collaboration/open-data-ecosystem/_git/infrastructure-templates?path=%2Finfra&version=GBmaster&_a=contents)
+- Azure infrastructure for the service, provisioned by [OSDU SPI Stack](https://github.com/Azure/osdu-spi-stack)
 - While not a strict dependency, example commands in this document use [bash](https://www.gnu.org/software/bash/)
 
 ### General Tips
@@ -142,6 +145,11 @@ Java version: 17, vendor: AdoptOpenJDK
 ...
 ```
 
+The OSDU dependencies resolve from the public OSDU community package registry. Pass the settings file in `.mvn` to Maven:
+```bash
+mvn --settings .mvn/community-maven.settings.xml <goals>
+```
+
 ### Build and run the application
 
 After configuring your environment as specified above, you can follow these steps to build and run the application. These steps should be invoked from the repository root.
@@ -185,6 +193,10 @@ All the Swagger and OpenAPI related common properties are managed here [swagger.
 
 Jet Brains - the authors of Intellij IDEA, have written an [excellent guide](https://www.jetbrains.com/help/idea/debugging-your-first-java-application.html) on how to debug java programs.
 
+
+## Deploying the Service
+
+Environments and service deployments are provisioned by [OSDU SPI Stack](https://github.com/Azure/osdu-spi-stack). This repository builds the service image and runs the acceptance tests against a deployed environment; see [`file-acceptance-test`](../../file-acceptance-test/README.md).
 
 ## License
 Copyright © Microsoft Corporation
