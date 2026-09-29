@@ -62,7 +62,7 @@ SPI Stack sets the service's environment from two places: the shared `osdu-confi
 | `AZURE_AD_APP_RESOURCE_ID` | `$(AAD_CLIENT_ID)` | Token audience |
 | `PARTITION_SERVICE_ENDPOINT` | `http://partition/api/partition/v1` | Per-partition resource lookup |
 | `OSDU_ENTITLEMENTS_URL` | `http://entitlements/api/entitlements/v2` | Caller authorization |
-| `OSDU_ENTITLEMENTS_APP_KEY` | `OBSOLETE` | Legacy key the service no longer uses; the property has no default, so it must be set |
+| `OSDU_ENTITLEMENTS_APP_KEY` | `OBSOLETE` | Legacy API key passed to the Entitlements client; SPI Stack sets a placeholder, and the property has no default, so it must be set |
 | `OSDU_STORAGE_URL` | `http://storage/api/storage/v2` | Metadata records |
 | `SEARCH_HOST` | `http://search/api/search/v2` | File list queries |
 | `SEARCH_QUERY_LIMIT` | `1000` | Page size for search queries |
