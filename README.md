@@ -56,23 +56,23 @@ SPI Stack sets the service's environment from two places: the shared `osdu-confi
 
 **Specific to File**, from `services/file.yaml`:
 
-| Variable | Value on SPI Stack | Purpose |
-|---|---|---|
-| `SERVER_SERVLET_CONTEXTPATH` | `/api/file/` | API base path |
-| `AZURE_AD_APP_RESOURCE_ID` | `$(AAD_CLIENT_ID)` | Token audience |
-| `PARTITION_SERVICE_ENDPOINT` | `http://partition/api/partition/v1` | Per-partition resource lookup |
-| `OSDU_ENTITLEMENTS_URL` | `http://entitlements/api/entitlements/v2` | Caller authorization |
-| `OSDU_ENTITLEMENTS_APP_KEY` | `OBSOLETE` | Legacy API key passed to the Entitlements client; SPI Stack sets a placeholder, and the property has no default, so it must be set |
-| `OSDU_STORAGE_URL` | `http://storage/api/storage/v2` | Metadata records |
-| `SEARCH_HOST` | `http://search/api/search/v2` | File list queries |
-| `SEARCH_QUERY_LIMIT` | `1000` | Page size for search queries |
-| `BATCH_SIZE` | `100` | Batch size for search queries |
-| `COSMOSDB_DATABASE` | `osdu-db` | Database inside each partition's Cosmos DB account |
-| `AZURE_PUBSUB_PUBLISH` | `true` | Publish file status events |
-| `SERVICE_BUS_ENABLED_STATUS` | `true` | Publish status events to Service Bus |
-| `SERVICE_BUS_TOPIC_STATUS` | `statuschangedtopic` | Status event topic |
-| `AZURE_ISTIOAUTH_ENABLED` | `true` | Trust the mesh's token validation |
-| `AZURE_PAAS_WORKLOADIDENTITY_ISENABLED` | `true` | Authenticate to Azure with workload identity |
+| Variable and value on SPI Stack | Purpose |
+|---|---|
+| `SERVER_SERVLET_CONTEXTPATH`<br>`/api/file/` | API base path |
+| `AZURE_AD_APP_RESOURCE_ID`<br>`$(AAD_CLIENT_ID)` | Token audience |
+| `PARTITION_SERVICE_ENDPOINT`<br>`http://partition/api/partition/v1` | Per-partition resource lookup |
+| `OSDU_ENTITLEMENTS_URL`<br>`http://entitlements/api/entitlements/v2` | Caller authorization |
+| `OSDU_ENTITLEMENTS_APP_KEY`<br>`OBSOLETE` | Legacy key passed to the Entitlements client; the property has no default, so the placeholder must stay set |
+| `OSDU_STORAGE_URL`<br>`http://storage/api/storage/v2` | Metadata records |
+| `SEARCH_HOST`<br>`http://search/api/search/v2` | File list queries |
+| `SEARCH_QUERY_LIMIT`<br>`1000` | Page size for search queries |
+| `BATCH_SIZE`<br>`100` | Batch size for search queries |
+| `COSMOSDB_DATABASE`<br>`osdu-db` | Database inside each partition's Cosmos DB account |
+| `AZURE_PUBSUB_PUBLISH`<br>`true` | Publish file status events |
+| `SERVICE_BUS_ENABLED_STATUS`<br>`true` | Publish status events to Service Bus |
+| `SERVICE_BUS_TOPIC_STATUS`<br>`statuschangedtopic` | Status event topic |
+| `AZURE_ISTIOAUTH_ENABLED`<br>`true` | Trust the mesh's token validation |
+| `AZURE_PAAS_WORKLOADIDENTITY_ISENABLED`<br>`true` | Authenticate to Azure with workload identity |
 
 The service authenticates to Azure with workload identity, which injects `AZURE_CLIENT_ID` and a federated token; there are no client secrets. Signed URLs are user delegation SAS, signed with a key from that identity rather than an account key. Per-partition resources are resolved at request time through the Partition service.
 
