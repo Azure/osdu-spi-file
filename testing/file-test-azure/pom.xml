@@ -43,18 +43,18 @@
         <dependency>
           <groupId>com.azure</groupId>
           <artifactId>azure-identity</artifactId>
-          <version>1.11.2</version>
+          <version>1.12.2</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>com.azure</groupId>
           <artifactId>azure-core-http-netty</artifactId>
-          <version>1.14.0</version>
+          <version>1.15.1</version>
         </dependency>
         <dependency>
           <groupId>com.azure</groupId>
           <artifactId>azure-core</artifactId>
-          <version>1.46.0</version>
+          <version>1.49.1</version>
         </dependency>
         <dependency>
             <groupId>org.opengroup.osdu</groupId>
@@ -124,7 +124,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>29.0-jre</version>
+            <version>33.7.2-jre</version>
             <scope>test</scope>
         </dependency>
       <dependency>
