@@ -20,12 +20,11 @@
   <parent>
     <groupId>org.opengroup.osdu</groupId>
     <artifactId>os-file</artifactId>
-    <version>0.31.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <artifactId>file-azure</artifactId>
-  <version>0.31.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>file-azure</name>
@@ -110,7 +109,7 @@
     <dependency>
       <groupId>org.opengroup.osdu</groupId>
       <artifactId>file-core</artifactId>
-      <version>0.31.0-SNAPSHOT</version>
+      <version>${revision}</version>
       <exclusions>
         <exclusion>
           <groupId>ch.qos.logback</groupId>
