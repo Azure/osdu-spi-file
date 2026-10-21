@@ -168,6 +168,11 @@
           <artifactId>log4j-to-slf4j</artifactId>
           <groupId>org.apache.logging.log4j</groupId>
         </exclusion>
+        <!-- Root pom manages logback-classic without logback-core; Azure logs through log4j2 -->
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
