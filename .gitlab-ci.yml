@@ -10,9 +10,11 @@ variables:
   AZURE_COVERAGE_THRESHOLD: $AZURE_CODE_COVERAGE_THRESHOLD
   AZURE_SWAGGER_PATH: api/file/v2/swagger-ui/index.html
 
-  #CIMPL
+  # Discover OpenAPI specs via springdoc swagger-config.
+  # Do not set CIMPL_OPENAPI_YAML_ROUTE or CIMPL_OPENAPI_SPEC_PATH — those bypass
+  # discovery and pin openapi-spec checks to a single route (ci-cd-pipelines#65).
+  # Schemathesis routes are set via .schemathesis-file-matrix below.
   CIMPL_OPENAPI_CONFIG_ROUTE: /api/file/v2/api-docs/swagger-config
-  SCHEMATHESIS_OPENAPI_YAML_ROUTE: /api/file/v2/api-docs.yaml
 
   ACCEPTANCE_TEST_DIR: "file-acceptance-test"
 
@@ -87,3 +89,37 @@ fossa-analyze:
   image: $CI_REGISTRY/divido/fossa-with-cache:v0.9-jdk17
 fossa-check-notice:
   image: $CI_REGISTRY/divido/fossa-with-cache:v0.9-jdk17
+
+# Schemathesis jobs load schemathesis-tests/schemathesis.toml via
+# SCHEMATHESIS_CONFIG_FILE when present (see reporting/schemathesis.yml).
+.schemathesis-file-common:
+  variables:
+    # schemathesis-base latest image from master
+    SCHEMATHESIS_BASE_IMAGE: community.opengroup.org:5555/osdu/platform/system/sdks/schemathesis-base:latest
+
+.schemathesis-file-matrix:
+  parallel:
+    matrix:
+      - SCHEMATHESIS_OPENAPI_YAML_ROUTE:
+          - "/api/file/v2/api-docs.yaml"
+
+schemathesis-dev-tests:
+  extends:
+    - .cimpl-dev-variables
+    - .schemathesis-osdu-main-tests-template
+    - .schemathesis-file-common
+    - .schemathesis-file-matrix
+
+schemathesis-dev-backup-tests:
+  extends:
+    - .cimpl-dev-backup-variables
+    - .schemathesis-osdu-main-tests-template
+    - .schemathesis-file-common
+    - .schemathesis-file-matrix
+
+schemathesis-prod-tests:
+  extends:
+    - .cimpl-prod-variables
+    - .schemathesis-osdu-main-tests-template
+    - .schemathesis-file-common
+    - .schemathesis-file-matrix
