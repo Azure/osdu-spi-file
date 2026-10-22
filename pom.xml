@@ -46,7 +46,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- OSDU Versions-->
-    <os-core-common.version>7.1.3</os-core-common.version>
+    <os-core-common.version>8.4.0</os-core-common.version>
 
     <!-- Spring Versions-->
     <!--
