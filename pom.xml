@@ -668,12 +668,6 @@
       </modules>
     </profile>
     <profile>
-      <id>azure</id>
-      <modules>
-        <module>provider/file-azure</module>
-      </modules>
-    </profile>
-    <profile>
       <id>ibm</id>
       <modules>
         <module>provider/file-ibm</module>
