@@ -30,8 +30,8 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
   @Override
   public void checkAuthentication(String authorizationToken, String partitionID) {
-    log.debug("Start checking authentication. Authorization: {}, partitionID: {}",
-              authorizationToken, partitionID);
+    log.debug("Start checking authentication. Authorization token present: {}, partitionID: {}",
+              StringUtils.isNotBlank(authorizationToken), partitionID);
 
     checkPreconditions(authorizationToken, partitionID);
 
