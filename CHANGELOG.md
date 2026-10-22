@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.2.1](https://github.com/Azure/osdu-spi-file/compare/v1.2.0...v1.2.1) (2026-10-22)
+
+
+### 🐛 Bug Fixes
+
+* [Venus] CI-friendly Maven versions for File ([#321](https://github.com/Azure/osdu-spi-file/issues/321)) ([0b13c76](https://github.com/Azure/osdu-spi-file/commit/0b13c76086830503dd92517921dee2236adfe37c))
+* [Venus] Verify the deployed revision in File acceptance tests ([#329](https://github.com/Azure/osdu-spi-file/issues/329)) ([41dca8c](https://github.com/Azure/osdu-spi-file/commit/41dca8c6b3034c44228b1fbdc98221173d86d8f0))
+* **azure:** Align azure-core with netty transport ([5a8dc8f](https://github.com/Azure/osdu-spi-file/commit/5a8dc8fe782f27412e7948807b0506665e4bc5ae))
+* **azure:** Exclude spring-boot-starter-logging from file-azure ([8e0dd77](https://github.com/Azure/osdu-spi-file/commit/8e0dd77c48e2e367cb1ef336f1bb923c09531676))
+* **azure:** Exclude spring-boot-starter-logging from file-azure ([af206dd](https://github.com/Azure/osdu-spi-file/commit/af206dd5c19baeeec1526af8ad81f0a8ca568e86))
+* Classify upstream schemathesis-tests entry in upstream filter ([d278d71](https://github.com/Azure/osdu-spi-file/commit/d278d71a1db4ef7eb775008fe7419dc63893b77b))
+* Classify upstream schemathesis-tests entry in upstream filter ([a20672f](https://github.com/Azure/osdu-spi-file/commit/a20672f6dd5659656d13d65e90ea4ba9737babd7))
+* Sync upstream changes from 91b46c74 ([508f970](https://github.com/Azure/osdu-spi-file/commit/508f9705b74084902593ff88bc409f0383a69f5c))
+* Sync upstream changes from 98b0f2a3 ([f2f1066](https://github.com/Azure/osdu-spi-file/commit/f2f1066532be0fee5ded4f6851bcb3009bb7c8d6))
+* Sync upstream changes from fd355c86 ([061a3cb](https://github.com/Azure/osdu-spi-file/commit/061a3cb6f237dd92cc1ba05a7b4217999a73e704))
+
+
+### 🔧 Miscellaneous
+
+* Generate filtered upstream tree ([c21fbc8](https://github.com/Azure/osdu-spi-file/commit/c21fbc86a8a9157bb6a89577ad47d2e7d1d8e2a5))
+* Generate filtered upstream tree ([6b8eb5e](https://github.com/Azure/osdu-spi-file/commit/6b8eb5edbf83596ebaf6b5a619bdd79aac2e18d3))
+* Generate filtered upstream tree ([fe0016c](https://github.com/Azure/osdu-spi-file/commit/fe0016c717a150beaabee329f75eae74c3a60329))
+* Remove Azure provider and Azure CI/CD ([98b0f2a](https://github.com/Azure/osdu-spi-file/commit/98b0f2a35c8274f2fb672021b61a6ec1efa870df))
+* Remove Azure provider and Azure CI/CD ([b23f00c](https://github.com/Azure/osdu-spi-file/commit/b23f00c55758f0434e0933b9c0ccbafb0a0a6236))
+* Stamp fork-owned pom versions ([bb3cb1f](https://github.com/Azure/osdu-spi-file/commit/bb3cb1fcffac0415dbf4e48f081d9ed38938cab5))
+* Sync template updates ([8b6f999](https://github.com/Azure/osdu-spi-file/commit/8b6f9992d4462c45df30e73fd1961d15b780061a))
+* Sync template updates ([07a470e](https://github.com/Azure/osdu-spi-file/commit/07a470e02f23ed189ab86f3da955d129e4d5fa11))
+* Sync template updates ([43f79e5](https://github.com/Azure/osdu-spi-file/commit/43f79e5b57ad4de7f3ccac81041cc9e228108567))
+* **template-sync:** Sync template updates (updated 2026-10-13) ([63cb019](https://github.com/Azure/osdu-spi-file/commit/63cb019d4af0b004c3f4d5a4f800ad5f312529c7))
+* **template-sync:** Sync template updates 2026-10-14 ([b757a93](https://github.com/Azure/osdu-spi-file/commit/b757a93d0f24ff38f3a9844cb0515bc8bad8c069))
+* **template-sync:** Sync template updates 2026-10-20 ([13ba9d3](https://github.com/Azure/osdu-spi-file/commit/13ba9d3e6c8f16bc5b13a09478e694244daf0b11))
+* Update NOTICE from fossa-check-notice ([f4f8d27](https://github.com/Azure/osdu-spi-file/commit/f4f8d272383d99df021d6615f90235956cf90b14))
+
+
+### 🔨 Build System
+
+* **deps:** Bump com.azure:azure-core-http-netty ([ef38dd4](https://github.com/Azure/osdu-spi-file/commit/ef38dd4306bd27459db9597608dc1bd280d2523a))
+* **deps:** Bump com.azure:azure-core-http-netty from 1.15.1 to 1.15.13 in /testing/file-test-azure ([0fe47c1](https://github.com/Azure/osdu-spi-file/commit/0fe47c15360718392e7e9dad33c5ab22acd12ffe))
+
 ## [1.2.0](https://github.com/Azure/osdu-spi-file/compare/v1.1.0...v1.2.0) (2026-10-07)
 
 
