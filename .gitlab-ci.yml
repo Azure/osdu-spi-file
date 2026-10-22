@@ -1,15 +1,6 @@
 variables:
   CORE_BUILD_SUBDIR: file-core
 
-  #Azure
-  AZURE_SERVICE: file
-  AZURE_BUILD_SUBDIR: provider/file-azure
-  AZURE_TEST_SUBDIR: testing/file-test-azure
-  STAGING_CONTAINER_NAME: file-staging-area
-  PERSISTENCE_CONTAINER_NAME: file-persistent-area
-  AZURE_COVERAGE_THRESHOLD: $AZURE_CODE_COVERAGE_THRESHOLD
-  AZURE_SWAGGER_PATH: api/file/v2/swagger-ui/index.html
-
   # Discover OpenAPI specs via springdoc swagger-config.
   # Do not set CIMPL_OPENAPI_YAML_ROUTE or CIMPL_OPENAPI_SPEC_PATH — those bypass
   # discovery and pin openapi-spec checks to a single route (ci-cd-pipelines#65).
@@ -40,13 +31,7 @@ include:
   - project: "osdu/platform/ci-cd-pipelines"
     file: "cloud-providers/cimpl-global.yml"
 
-  - project: "osdu/platform/ci-cd-pipelines"
-    file: "cloud-providers/azure.yml"
-
   - local: "devops/core-plus/pipeline/override-stages.yml"
-
-  - project: "osdu/platform/ci-cd-pipelines"
-    file: "cloud-providers/azure-one-pipeline.yml"
 
   - project: "osdu/platform/ci-cd-pipelines"
     file: "reporting/schemathesis.yml"
@@ -77,13 +62,6 @@ download_plugins:
 gemnasium-maven-dependency_scanning:
   variables:
     DS_JAVA_VERSION: 17
-
-azure_containerize:
-  variables:
-    AZURE_CONTAINERIZE_REPOSITORY: "https://gitlab-ci-token:${CI_JOB_TOKEN}@community.opengroup.org/osdu/platform/deployment-and-operations/base-containers-azure/service-base-image"
-
-azure_test:
-  image: community.opengroup.org:5555/osdu/platform/deployment-and-operations/base-containers-azure/azure-maven17:v0.0.1
 
 fossa-analyze:
   image: $CI_REGISTRY/divido/fossa-with-cache:v0.9-jdk17

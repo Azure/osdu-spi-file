@@ -297,7 +297,6 @@ For example:  for the given `storage account`.
 > **Note**:
 >- The Request is a Map of Properties to manage the input parameters required to revoke Signed URLs.
 >- Each CSP will have its own implementation and request properties based on the revoke Logic supported by the provider.
->- Example: For `Azure` [ Resource Group and Storage Account Name] is required to revoke URLs. Refer [Azure README](./provider/file-azure/README.md)
 
 Request example:
 
@@ -344,7 +343,7 @@ All the Swagger and OpenAPI related common properties are managed here [swagger.
 #### Server Url(full path vs relative path) configuration
 - `api.server.fullUrl.enabled=true` It will generate full server url in the OpenAPI swagger
 - `api.server.fullUrl.enabled=false` It will generate only the contextPath only
-- default value is false (Currently only in Azure it is enabled)
+- default value is false
 [Reference]:(https://springdoc.org/faq.html#_how_is_server_url_generated) 
 
 ## Google Cloud Implementation
