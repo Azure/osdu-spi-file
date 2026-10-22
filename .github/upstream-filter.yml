@@ -28,6 +28,7 @@ top_level:
   docs: keep
   pom.xml: keep
   publish.yml: strip
+  schemathesis-tests: keep
   file-acceptance-test: keep
   file-core: keep
   file-core-plus: strip
