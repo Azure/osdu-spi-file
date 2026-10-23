@@ -50,22 +50,22 @@
     <dependency>
       <groupId>org.opengroup.osdu</groupId>
       <artifactId>core-plus-common-lib</artifactId>
-      <version>0.27.2</version>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.opengroup.osdu</groupId>
       <artifactId>os-oqm-core</artifactId>
-      <version>0.27.2</version>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.opengroup.osdu</groupId>
       <artifactId>os-osm-core</artifactId>
-      <version>0.27.3</version>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.opengroup.osdu</groupId>
       <artifactId>os-obm-core</artifactId>
-      <version>0.32.0</version>
+      <version>1.0.0</version>
     </dependency>
 
 
@@ -99,13 +99,11 @@
       os-core-common declares lettuce-core as scope=provided (compile-only).
       file-core-plus is packaged as a self-contained Spring Boot fat jar with
       no external container supplying Lettuce, so we must include it explicitly.
-      Version is pinned here independently — os-core-common should not govern
-      third-party runtime versions for consumers.
+      Version is managed by the parent POM (lettuce.version).
     -->
     <dependency>
       <groupId>io.lettuce</groupId>
       <artifactId>lettuce-core</artifactId>
-      <version>7.5.2.RELEASE</version>
     </dependency>
   </dependencies>
 

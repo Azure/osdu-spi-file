@@ -329,6 +329,12 @@ The File service has several Service Provider Interfaces that the classes need t
 | StorageService         | Obligatory to implement | `file-core/src/main/java/.../provider/interfaces/StorageService`         |
 | ValidationService      | Optional to implement   | `file-core/src/main/java/.../provider/interfaces/ValidationService`      |
 
+## Prerequisites
+
+- [Maven 3.9.16+](https://maven.apache.org/download.cgi)
+- [JDK 25](https://adoptium.net/)
+- [Lombok 1.18.40 or later](https://projectlombok.org/setup/maven)
+
 ## Running integration tests
 
 Integration tests are located in a separate project for each cloud in the ```testing``` directory under the project root directory.
