@@ -37,6 +37,9 @@ import org.opengroup.osdu.file.service.storage.DataLakeStorageService;
 import org.opengroup.osdu.file.service.storage.StorageException;
 import org.opengroup.osdu.file.util.ExpiryTimeUtil;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,7 +49,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class FileDeliveryServiceTest {
 
   public static final String RECORD_ID = "tenant1:dataset--File.Generic:1b9dd1a8-d317-11ea-87d0-0242ac130003";

@@ -89,7 +89,7 @@
         </dependency>
         <!--
           The root pom excludes spring-boot-starter-tomcat from the managed
-          spring-boot-starter-web entry, which also strips tomcat-embed-core
+          spring-boot-starter-webmvc entry, which also strips tomcat-embed-core
           (and therefore jakarta.servlet-api). The AWS provider runs an embedded
           Tomcat, so re-introduce the starter explicitly here.
         -->

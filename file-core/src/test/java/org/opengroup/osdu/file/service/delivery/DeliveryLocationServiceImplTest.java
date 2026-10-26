@@ -25,6 +25,9 @@ import org.opengroup.osdu.file.model.delivery.SrnFileData;
 import org.opengroup.osdu.file.model.delivery.UrlSigningResponse;
 import org.opengroup.osdu.file.provider.interfaces.delivery.IDeliveryStorageService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.net.MalformedURLException;
@@ -41,7 +44,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // @RunWith(MockitoJUnitRunner.class)
 // @SpringBootTest(classes = { FileApplication.class })
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class DeliveryLocationServiceImplTest {
 
     @InjectMocks
