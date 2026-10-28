@@ -8,13 +8,17 @@ import org.mockito.Mockito;
 import org.opengroup.osdu.core.common.logging.JaxRsDpsLog;
 import org.opengroup.osdu.file.provider.interfaces.IStorageService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class FileAdminServiceTest {
 
   @InjectMocks

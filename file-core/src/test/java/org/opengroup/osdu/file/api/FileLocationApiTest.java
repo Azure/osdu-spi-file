@@ -15,6 +15,9 @@ import org.opengroup.osdu.file.logging.AuditLogger;
 import org.opengroup.osdu.file.model.SignedUrlParameters;
 import org.opengroup.osdu.file.provider.interfaces.ILocationService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Collections;
 
@@ -25,7 +28,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class FileLocationApiTest {
 
   private final String response = "response";

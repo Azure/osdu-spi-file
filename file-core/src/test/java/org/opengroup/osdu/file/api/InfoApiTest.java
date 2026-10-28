@@ -7,6 +7,9 @@ import org.mockito.Mock;
 import org.opengroup.osdu.core.common.info.VersionInfoBuilder;
 import org.opengroup.osdu.core.common.model.info.VersionInfo;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.io.IOException;
 
@@ -15,7 +18,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class InfoApiTest {
 
   @Mock

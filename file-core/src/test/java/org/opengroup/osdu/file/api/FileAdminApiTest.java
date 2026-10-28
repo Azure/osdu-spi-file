@@ -7,6 +7,9 @@ import org.mockito.Mock;
 import org.opengroup.osdu.file.service.FileAdminService;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +17,8 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class FileAdminApiTest {
 
   @Mock

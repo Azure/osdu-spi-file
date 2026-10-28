@@ -10,11 +10,15 @@ import org.opengroup.osdu.file.service.FileDeliveryService;
 import org.opengroup.osdu.file.service.storage.StorageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class FileDeliveryApiTest {
 
   @Mock

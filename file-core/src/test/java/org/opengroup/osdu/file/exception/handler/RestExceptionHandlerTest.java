@@ -13,12 +13,16 @@ import org.opengroup.osdu.file.service.storage.StorageException;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class RestExceptionHandlerTest {
 
   @InjectMocks

@@ -11,11 +11,15 @@ import org.opengroup.osdu.file.model.filemetadata.RecordVersion;
 import org.opengroup.osdu.file.service.FileMetadataService;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class FileMetadataApiTest {
 
     @Mock
