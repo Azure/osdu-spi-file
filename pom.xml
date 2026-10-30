@@ -539,7 +539,6 @@
                     <exclude>org.opengroup.osdu:file-core</exclude>
                     <exclude>org.opengroup.osdu:file-core-plus</exclude>
                     <exclude>org.opengroup.osdu:file-azure</exclude>
-                    <exclude>org.opengroup.osdu:file-ibm</exclude>
                   </excludes>
                 </requireReleaseDeps>
               </rules>
