@@ -2,6 +2,8 @@ schemaVersion: 3
 service:
   name: file
   archetype: java-maven-azure
+componentGovernance:
+  upstream: https://community.opengroup.org/osdu/platform/system/file
 tests:
   acceptance:
     type: maven
