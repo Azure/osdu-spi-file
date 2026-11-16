@@ -17,7 +17,6 @@
 package org.opengroup.osdu.file.provider.azure.model.blob;
 
 
-import com.google.api.client.util.Data;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 
@@ -83,7 +82,7 @@ public class BlobInfo implements Serializable {
 
 
     public Builder setContentType(String contentType) {
-      this.contentType = (String)MoreObjects.firstNonNull(contentType, Data.nullOf(String.class));
+      this.contentType = MoreObjects.firstNonNull(contentType, "");
       return this;
     }
 
