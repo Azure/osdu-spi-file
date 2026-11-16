@@ -14,6 +14,9 @@
 
 package org.opengroup.osdu.file.service.delivery;
 
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -47,7 +50,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 // @RunWith(MockitoJUnitRunner.class)
 // @SpringBootTest(classes = { FileApplication.class })
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class DeliveryLocationServiceImplTest {
 
     @InjectMocks
