@@ -7086,10 +7086,10 @@ limitations under the License.
 
 ---------------------------------------------------------
 
-io.netty/netty-tcnative-boringssl-static 2.0.70.Final - Apache-2.0
+io.netty/netty-codec-base 4.2.19.Final - Apache-2.0
 
 
-Copyright 2016 The Netty Project
+Copyright 2024 The Netty Project
 
 Apache License
 
