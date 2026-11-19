@@ -72,6 +72,7 @@ public class FileCollectionDmsServiceImpl implements IDmsService {
 
     try {
       MultiRecordInfo batchRecordsResponse = dataLakeStorage.getRecords(retrievalInstructionsRequest.getDatasetRegistryIds());
+      batchRecordsResponse = DatasetMetadataRecords.requirePresent(batchRecordsResponse);
       List<Record> datasetMetadataRecords = batchRecordsResponse.getRecords();
       List<FileRetrievalData> fileRetrievalData = buildUnsignedUrls(datasetMetadataRecords);
 
