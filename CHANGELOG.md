@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.2.2](https://github.com/Azure/osdu-spi-file/compare/v1.2.1...v1.2.2) (2026-11-20)
+
+
+### 🐛 Bug Fixes
+
+* **azure:** Drop google-http Data dependency in BlobInfo ([093602b](https://github.com/Azure/osdu-spi-file/commit/093602bff784d6be2c04376a7b85336a94bd864b))
+* Sync upstream changes from 73ffe48e ([9dc997c](https://github.com/Azure/osdu-spi-file/commit/9dc997ca8ec6f8b7751c17fd1f270b2d7461c477))
+* Sync upstream changes from 9d6dc886 ([3dc522e](https://github.com/Azure/osdu-spi-file/commit/3dc522ecae5db9aaf989032e375b85027306358e))
+* Use OBM 1.1.0 for partition-aware S3 signing ([9d6dc88](https://github.com/Azure/osdu-spi-file/commit/9d6dc8866517852cd40a2d55780e695387868a47))
+* Use OBM 1.1.0 for partition-aware S3 signing ([0ac8b64](https://github.com/Azure/osdu-spi-file/commit/0ac8b6483315e7231ce98e260cc396a28e78d89f))
+
+
+### 🔧 Miscellaneous
+
+* Generate filtered upstream tree ([5abefa0](https://github.com/Azure/osdu-spi-file/commit/5abefa00f0a79de38e42a4ec17738a65b57512b2))
+* Generate filtered upstream tree ([4f4748f](https://github.com/Azure/osdu-spi-file/commit/4f4748fce86b890ae280f72ad3078c9567bd2385))
+* **notice:** Refresh NOTICE from Component Governance ([92570fd](https://github.com/Azure/osdu-spi-file/commit/92570fdeb9241fdcfd4a32cd4a491178d5633ca7))
+* **notice:** Refresh NOTICE from Component Governance ([e640072](https://github.com/Azure/osdu-spi-file/commit/e640072f8484cca14d8244d2f71698c0d56eecfa))
+* Sync template updates ([f481d2f](https://github.com/Azure/osdu-spi-file/commit/f481d2fd5dfcd72087c2874b2366b28f72cf292b))
+* **template-sync:** Sync template updates 2026-11-16 ([2997513](https://github.com/Azure/osdu-spi-file/commit/29975132c9392f51b6b26139f6c62be98ab6b498))
+
+
+### 🔨 Build System
+
+* **azure:** Bump core-lib-azure and Azure SDK versions ([8894012](https://github.com/Azure/osdu-spi-file/commit/8894012beefdf8c9a22e46bb7acae0c396bdcadd))
+
 ## [1.2.1](https://github.com/Azure/osdu-spi-file/compare/v1.2.0...v1.2.1) (2026-11-09)
 
 
