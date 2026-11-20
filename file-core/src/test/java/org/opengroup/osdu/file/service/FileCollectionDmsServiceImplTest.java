@@ -171,6 +171,22 @@ public class FileCollectionDmsServiceImplTest {
   }
 
   @Test
+  void getRetrievalInstructionsWhenDatasetMetadataNotFound() throws Exception {
+    RetrievalInstructionsRequest testRequest = new RetrievalInstructionsRequest();
+    testRequest.getDatasetRegistryIds().add(TEST_DATASET_ID);
+
+    when(storageFactory.create(headers)).thenReturn(dataLakeStorageService);
+    when(dataLakeStorageService.getRecords(testRequest.getDatasetRegistryIds())).thenReturn(null);
+
+    AppException exception = assertThrows(AppException.class,
+        () -> fileCollectionDmsService.getRetrievalInstructions(testRequest));
+
+    assertEquals(HttpStatus.NOT_FOUND.value(), exception.getError().getCode());
+    assertEquals("Not Found.", exception.getError().getReason());
+    assertEquals("Dataset metadata records not found.", exception.getError().getMessage());
+  }
+
+  @Test
   void getRetrievalInstructionsStorageExceptionInDataLakeStorageGetRecords() throws Exception {
     RetrievalInstructionsRequest testRequest = new RetrievalInstructionsRequest();
     testRequest.getDatasetRegistryIds().add(TEST_DATASET_ID);
