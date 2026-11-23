@@ -85,7 +85,7 @@
     <guava.version>33.7.2-jre</guava.version>
     <log4j2.version>2.25.5</log4j2.version>
     <!-- Logback CVE-2026-104721 (SiftingAppender) fixed in 1.6.5; Spring Boot 4.0.9 still manages 1.5.x -->
-    <logback.version>1.6.5</logback.version>
+    <logback.version>1.6.8</logback.version>
     <jakarta.inject-api.version>2.0.1</jakarta.inject-api.version>
     <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
     <snakeyaml.version>2.5</snakeyaml.version>
