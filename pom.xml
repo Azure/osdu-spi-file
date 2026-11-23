@@ -66,7 +66,7 @@
     <spring-cloud.version>2025.1.4</spring-cloud.version>
     <!-- Spring Framework CVE-2026-47884 / CVE-2026-47890 are fixed only in 7.0.9 -->
     <spring-framework.version>7.0.10</spring-framework.version>
-    <spring-security.version>7.0.7</spring-security.version>
+    <spring-security.version>7.0.9</spring-security.version>
     <!-- Patched Jackson 3 (Spring Boot 4 default) and Jackson 2 (still pulled by third-party libraries);
          these are the spring-boot-dependencies property names, so they override the parent-managed BOMs -->
     <jackson-bom.version>3.1.8</jackson-bom.version>
