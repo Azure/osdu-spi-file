@@ -39,7 +39,7 @@
     <core-lib-azure.version>5.0.0</core-lib-azure.version>
     <!-- Root pom pins lettuce explicitly, which beats the core-lib-azure BOM; match the library here -->
     <lettuce.version>7.9.0.RELEASE</lettuce.version>
-    <azure-sdk.version>1.3.9</azure-sdk.version>
+    <azure-sdk.version>1.3.10</azure-sdk.version>
     <azure-spring.version>7.3.0</azure-spring.version>
     <azure-core.version>1.45.0</azure-core.version>
 
