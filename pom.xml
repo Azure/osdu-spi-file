@@ -52,7 +52,7 @@
     <!--
        Important: spring-boot.version must be the same as the parent version
     -->
-    <spring-boot.version>4.0.9</spring-boot.version>
+    <spring-boot.version>4.0.10</spring-boot.version>
     <!-- os-core-common declares lettuce-core as provided; CVE-2025-58057 requires >= 7.5.2.RELEASE -->
     <lettuce.version>7.5.2.RELEASE</lettuce.version>
     <!-- lettuce-core 7.x requires Netty 4.2+; Spring Boot 4.0.9 manages 4.2.17.
